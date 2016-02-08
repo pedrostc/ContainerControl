@@ -28,6 +28,9 @@ namespace ContainerControl.DAL.Mapping
                 );
 
             Property(c => c.ModificadoEm)
+                .IsRequired();
+
+            Property(c => c.Versao)
                 .IsRequired()
                 .IsConcurrencyToken(true);
         }
