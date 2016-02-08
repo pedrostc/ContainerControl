@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.Domain", "ContainetControl.Domain\ContainerControl.Domain.csproj", "{9369D218-D0C6-47F4-AA1A-B92302442E90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.Domain", "ContainerControl.Domain\ContainerControl.Domain.csproj", "{9369D218-D0C6-47F4-AA1A-B92302442E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.DAL", "ContainetControl.DAL\ContainerControl.DAL.csproj", "{29BF20C4-E851-47B7-AEF9-D7E985A4230D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.DAL", "ContainerControl.DAL\ContainerControl.DAL.csproj", "{29BF20C4-E851-47B7-AEF9-D7E985A4230D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.Application", "ContainerControl.Application\ContainerControl.Application.csproj", "{709D252A-C8A2-4AA4-A790-F940040081BB}"
 EndProject
