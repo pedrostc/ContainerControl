@@ -4,6 +4,7 @@ namespace ContainerControl.Domain.Model
 {
     public class Container : ModelBase
     {
+        public Guid CodigoIsoId { get; set; }
         public CodigoIso CodigoIso { get; set; }
         public string NroContainer { get; set; }
         public double Tara { get; set; }

@@ -7,6 +7,5 @@ namespace ContainerControl.Domain.Model
         public Guid Id { get; set; }
         public DateTime CriadoEm { get; set; }
         public DateTime ModificadoEm { get; set; }
-        public byte[] Versao { get; set; }
     }
 }

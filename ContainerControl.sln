@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.DAL", "Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.Application", "ContainerControl.Application\ContainerControl.Application.csproj", "{709D252A-C8A2-4AA4-A790-F940040081BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.Presentation.MVC", "ContainerControl.Presentation.MVC\ContainerControl.Presentation.MVC.csproj", "{F1764051-5087-4C70-842F-0AA8407F77FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerControl.Application.Test", "ContainerControl.Application.Test\ContainerControl.Application.Test.csproj", "{292A3269-1E57-4DD4-B7EA-F987FADCC86E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{709D252A-C8A2-4AA4-A790-F940040081BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{709D252A-C8A2-4AA4-A790-F940040081BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{709D252A-C8A2-4AA4-A790-F940040081BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1764051-5087-4C70-842F-0AA8407F77FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1764051-5087-4C70-842F-0AA8407F77FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1764051-5087-4C70-842F-0AA8407F77FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1764051-5087-4C70-842F-0AA8407F77FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{292A3269-1E57-4DD4-B7EA-F987FADCC86E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{292A3269-1E57-4DD4-B7EA-F987FADCC86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{292A3269-1E57-4DD4-B7EA-F987FADCC86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{292A3269-1E57-4DD4-B7EA-F987FADCC86E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

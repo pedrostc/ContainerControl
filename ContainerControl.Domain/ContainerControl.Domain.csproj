@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ContainerControl.Domain</RootNamespace>
     <AssemblyName>ContainerControl.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -46,7 +46,6 @@
     <Compile Include="Model\Container.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\CodigoIsoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

@@ -32,10 +32,17 @@ namespace ContainerControl.DAL.Context
                 if (entry.State == EntityState.Added)
                     entity.CriadoEm = DateTime.Now;
 
-                if (entry.State == EntityState.Modified)
-                    entity.ModificadoEm = DateTime.Now;
+                entity.ModificadoEm = DateTime.Now;
             }
-            return base.SaveChanges();
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return 0;
         }
     }
 }
