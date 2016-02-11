@@ -1,8 +1,143 @@
-﻿@model dynamic
+﻿@using ContainerControl.Domain.Model
+@model List<Container>
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "Manutenir Containers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>title</h2>
+<div class="row">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <label for="edId">ID: </label>
+            <input ID="edId" name="edId" type="text" class="form-control" disabled="disabled"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="edNroContainer">NroContainer: </label>
+            <input ID="edNroContainer" name="edNroContainer" type="text" class="form-control"/>
+        </div>
+        <div class="col-md-4">
+            <label for="edxCodigoIso">C&oacute;digo ISO: </label>
+            <select ID="edxCodigoIso" name="edxCodigoIso" class="form-control">
+                <option value="-1">--Selecione--</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="edDataFabricacao">Data de fabrica&ccedil;&atilde;o:</label>
+            <input ID="edDataFabricacao" name="edDataFabricacao" type="datetime-local" class="form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="edTara">Tara: </label>
+            <input ID="edTara" name="edTara" type="number" class="form-control"/>
+        </div>
+        <div class="col-md-4">
+            <label for="edCM">CM: </label>
+            <input ID="edCM" name="edCM" type="number" class="form-control"/>
+        </div>
+        <div class="col-md-4">
+            <label for="edPeso">Peso: </label>
+            <input ID="edPeso" name="edPeso" type="number" class="form-control"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-8 col-md-4">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
+            <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i> Limpar</button>
+            <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-question-sign"></i> Ajudar</button>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group pull-right" role="group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Opera&ccedil;&otilde;es de C&oacute;digos ISO <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#" class="success"><i class="glyphicon glyphicon-plus-sign"></i> Incluir C&oacute;digo ISO</a>
+                </li>
+                <li>
+                    <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir C&oacute;digo ISO</a>
+                </li>
+                <li>
+                    <a class="primary"><i class="glyphicon glyphicon-edit"></i> Alterar C&oacute;digo ISO</a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="btn-group pull-right" role="group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Opera&ccedil;&otilde;es de Container <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#" class="success"><i class="glyphicon glyphicon-plus-sign"></i> Incluir Container</a>
+                </li>
+                <li>
+                    <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir Container</a>
+                </li>
+                <li>
+                    <a class="primary"><i class="glyphicon glyphicon-edit"></i> Alterar Container</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table ID="gridContainer" class="table table-responsive table-striped">
+            <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    NroContainer
+                </th>
+                <th>
+                    Tara
+                </th>
+                <th>
+                    CM
+                </th>
+                <th>
+                    Peso
+                </th>
+                <th>
+                    Codigo ISO
+                </th>
+                <th>
+                    Data de Fabrica&ccedil;&atilde;o
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
