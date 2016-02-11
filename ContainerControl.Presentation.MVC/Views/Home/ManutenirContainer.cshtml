@@ -99,7 +99,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table ID="gridContainer" class="table table-responsive table-striped">
+        <table ID="gridContainer" class="table table-responsive table-condensed table-hover table-striped">
             <thead>
             <tr>
                 <th>
@@ -141,3 +141,11 @@
 </div>
 
 
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).on("ready", function(s, e) {
+            $("#gridContainer").bootgrid();
+        });
+    </script>
+}
