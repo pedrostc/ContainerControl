@@ -67,7 +67,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#" class="success"><i class="glyphicon glyphicon-plus-sign"></i> Incluir C&oacute;digo ISO</a>
+                    <a href="#" class="success" data-toggle="modal" data-target="#mdlEditarCodigoIso"><i class="glyphicon glyphicon-plus-sign"></i> Incluir C&oacute;digo ISO</a>
                 </li>
                 <li>
                     <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir C&oacute;digo ISO</a>
@@ -84,7 +84,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#" class="success"><i class="glyphicon glyphicon-plus-sign"></i> Incluir Container</a>
+                    <a href="#" class="success" data-toggle="modal" data-target="#mdlEditarContainer"><i class="glyphicon glyphicon-plus-sign"></i> Incluir Container</a>
                 </li>
                 <li>
                     <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir Container</a>
@@ -139,7 +139,38 @@
         </table>
     </div>
 </div>
-
+<div ID="mdlEditarContainer" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Container</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("EditarContainer", new Container())
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div ID="mdlEditarCodigoIso" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Container</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("EditarCodigoIso", new CodigoIso())
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts
 {

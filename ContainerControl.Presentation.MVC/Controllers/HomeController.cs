@@ -22,5 +22,10 @@ namespace ContainerControl.Presentation.MVC.Controllers
         {
             return PartialView();
         }
+
+        public ActionResult EditarCodigoIso()
+        {
+            return PartialView();
+        }
     }
 }
