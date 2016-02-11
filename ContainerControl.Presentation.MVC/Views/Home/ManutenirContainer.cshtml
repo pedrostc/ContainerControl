@@ -23,7 +23,8 @@
         <h2>@ViewBag.Title</h2>
     </div>
 </div>
-@Html.BeginForm("ManutenirContainer", "Home", FormMethod.Post)
+
+@using (Html.BeginForm("ManutenirContainer", "Home", FormMethod.Post))
 {
     <div class="form-group">
         <div class="row">
@@ -71,6 +72,7 @@
         </div>
     </div>
 }
+
 <hr/>
 <div class="row">
     <div class="col-md-12">
