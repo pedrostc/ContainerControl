@@ -114,7 +114,7 @@ namespace ContainerControl.Application.Test.Repositorio
             }
         }
 
-        [TestCleanup]
+        //[TestCleanup]
         public void ClearDb()
         {
             using (ContainerRepositorio repo = new ContainerRepositorio())

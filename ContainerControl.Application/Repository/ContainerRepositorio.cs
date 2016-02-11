@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using ContainerControl.DAL.Context;
 using ContainerControl.Domain.Model;
 
@@ -14,6 +15,22 @@ namespace ContainerControl.Application.Repository
             using (ContainerControlContext dao = new ContainerControlContext())
             {
                 return dao.Containers.Include(c => c.CodigoIso).ToList();
+            }
+        }
+
+        public override IEnumerable<Container> CapturarPor(Expression<Func<Container, bool>> condicao)
+        {
+            using (ContainerControlContext dao = new ContainerControlContext())
+            {
+                return dao.Containers.Include(c => c.CodigoIso).Where(condicao).ToList();
+            }
+        }
+
+        public override Container CapturarPorId(Guid id)
+        {
+            using (ContainerControlContext dao = new ContainerControlContext())
+            {
+                return dao.Containers.Include(c => c.CodigoIso).FirstOrDefault(c => c.Id == id);
             }
         }
 

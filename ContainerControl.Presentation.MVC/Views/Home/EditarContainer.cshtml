@@ -4,46 +4,42 @@
 <div class="container-fluid form-group" data-bind="with: model">
     <div class="row">
         <div class="col-md-12">
-            <label for="edId">ID: </label>
-            <input ID="edId" name="edId" type="text" class="form-control" disabled="disabled" data-bind="value: Id"/>
+            @Html.LabelFor(m => m.Id)
+            @Html.TextBoxFor(m => m.Id, new { @class = "form-control", @disabled = "disabled" })
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <label for="edNroContainer">NroContainer: </label>
-            <input ID="edNroContainer" name="edNroContainer" type="text" class="form-control" data-bind="value: NroContainer"/>
+            @Html.LabelFor(m => m.NroContainer)
+            @Html.TextBoxFor(m => m.NroContainer, new { @class = "form-control" })
         </div>
         <div class="col-md-4">
-            <label for="edxCodigoIso">C&oacute;digo ISO: </label>
-            <select ID="edxCodigoIso" name="edxCodigoIso" class="form-control">
+            @Html.LabelFor(m => m.CodigoIso)
+            @*<select ID="edxCodigoIso" name="edxCodigoIso" class="form-control">
                 <option value="-1">--Selecione--</option>
-            </select>
+                @foreach (CodigoIso codigoIso in ViewBag.CodigosIso)
+                {
+                    <option value="@codigoIso.Id">@codigoIso.Nome</option>
+                }
+            </select>*@
         </div>
         <div class="col-md-4">
-            <label for="edDataFabricacao">Data de fabrica&ccedil;&atilde;o:</label>
-            <input ID="edDataFabricacao" name="edDataFabricacao" type="datetime-local" class="form-control" data-bind="value: Fabricacao"/>
+            @Html.LabelFor(m => m.Fabricacao)
+            @Html.TextBoxFor(m => m.Fabricacao, new { @class = "form-control", @type = "datetime-local" })
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <label for="edTara">Tara: </label>
-            <input ID="edTara" name="edTara" type="number" class="form-control" data-bind="value: Tara"/>
+            @Html.LabelFor(m => m.Tara)
+            @Html.TextBoxFor(m => m.Tara, new { @class = "form-control", @type = "number" })
         </div>
         <div class="col-md-4">
-            <label for="edCM">CM: </label>
-            <input ID="edCM" name="edCM" type="number" class="form-control" data-bind="value: CM"/>
+            @Html.LabelFor(m => m.CM)
+            @Html.TextBoxFor(m => m.CM, new { @class = "form-control", @type = "number" })
         </div>
         <div class="col-md-4">
-            <label for="edPeso">Peso: </label>
-            <input ID="edPeso" name="edPeso" type="number" class="form-control" data-bind="value: Peso"/>
+            @Html.LabelFor(m => m.Peso)
+            @Html.TextBoxFor(m => m.Peso, new {@class = "form-control", @type = "number"})
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    function ModelBinding() {
-        this.model = @Html.Raw(Json.Encode(Model));
-    }
-
-    ko.applyBindings(new ModelBinding());
-</script>

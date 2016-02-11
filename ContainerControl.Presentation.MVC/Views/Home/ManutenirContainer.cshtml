@@ -1,7 +1,19 @@
-﻿@using ContainerControl.Domain.Model
+﻿@using System.Web.Mvc
+@using ContainerControl.Domain.Model
 @model List<Container>
 
 @{
+    Container ParametrosPesquisa = new Container();
+    List<SelectListItem> codigosIso = new List<SelectListItem>() {
+            new SelectListItem()
+            {
+                Disabled = false,
+                Text = "--Selecione--",
+                Value = "-1"
+            }
+        };
+    codigosIso.AddRange(ViewBag.CodigosIso);
+
     ViewBag.Title = "Manutenir Containers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,53 +23,54 @@
         <h2>@ViewBag.Title</h2>
     </div>
 </div>
-<div class="form-group">
-    <div class="row">
-        <div class="col-md-12">
-            <label for="edId">ID: </label>
-            <input ID="edId" name="edId" type="text" class="form-control" disabled="disabled"/>
+@Html.BeginForm("ManutenirContainer", "Home", FormMethod.Post)
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => ParametrosPesquisa.Id)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Id, new { @class="form-control", @disabled="disabled" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.NroContainer)
+                @Html.TextBoxFor(m => ParametrosPesquisa.NroContainer, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.CodigoIso)
+                @Html.DropDownListFor(m => ParametrosPesquisa.CodigoIsoId, codigosIso, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.Fabricacao)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Fabricacao, new { @class = "form-control", @type="date" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.Tara)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Tara, new { @class = "form-control", @type = "number" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.CM)
+                @Html.TextBoxFor(m => ParametrosPesquisa.CM, new { @class = "form-control", @type = "number" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.Peso)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Peso, new { @class = "form-control", @type = "number" })
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <label for="edNroContainer">NroContainer: </label>
-            <input ID="edNroContainer" name="edNroContainer" type="text" class="form-control"/>
-        </div>
-        <div class="col-md-4">
-            <label for="edxCodigoIso">C&oacute;digo ISO: </label>
-            <select ID="edxCodigoIso" name="edxCodigoIso" class="form-control">
-                <option value="-1">--Selecione--</option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <label for="edDataFabricacao">Data de fabrica&ccedil;&atilde;o:</label>
-            <input ID="edDataFabricacao" name="edDataFabricacao" type="datetime-local" class="form-control"/>
+        <div class="col-md-offset-8 col-md-4">
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
+                <a class="btn btn-danger" href="@Url.Action("ManutenirContainer", "Home")"><i class="glyphicon glyphicon-remove-circle"></i> Limpar</a>
+                <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-question-sign"></i> Ajudar</button>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <label for="edTara">Tara: </label>
-            <input ID="edTara" name="edTara" type="number" class="form-control"/>
-        </div>
-        <div class="col-md-4">
-            <label for="edCM">CM: </label>
-            <input ID="edCM" name="edCM" type="number" class="form-control"/>
-        </div>
-        <div class="col-md-4">
-            <label for="edPeso">Peso: </label>
-            <input ID="edPeso" name="edPeso" type="number" class="form-control"/>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-offset-8 col-md-4">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
-            <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i> Limpar</button>
-            <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-question-sign"></i> Ajudar</button>
-        </div>
-    </div>
-</div>
+}
 <hr/>
 <div class="row">
     <div class="col-md-12">
@@ -126,15 +139,32 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            @foreach (Container cntr in Model)
+            {
+                <tr>
+                    <td>
+                        @cntr.Id
+                    </td>
+                    <td>
+                        @cntr.NroContainer
+                    </td>
+                    <td>
+                        @cntr.Tara
+                    </td>
+                    <td>
+                        @cntr.CM
+                    </td>
+                    <td>
+                        @cntr.Peso
+                    </td>
+                    <td>
+                        @cntr.CodigoIso.Codigo
+                    </td>
+                    <td>
+                        @cntr.Fabricacao
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>
@@ -176,7 +206,7 @@
 {
     <script type="text/javascript">
         $(document).on("ready", function(s, e) {
-            $("#gridContainer").bootgrid();
+            //$("#gridContainer").bootgrid();
         });
     </script>
 }

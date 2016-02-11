@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using ContainerControl.Application.Repository;
+using ContainerControl.Application.Services;
+using ContainerControl.Domain.Model;
 
 namespace ContainerControl.Presentation.MVC.Controllers
 {
@@ -15,7 +19,28 @@ namespace ContainerControl.Presentation.MVC.Controllers
 
         public ActionResult ManutenirContainer()
         {
-            return View();
+            using (CodigoIsoRepositorio codIsoRepo = new CodigoIsoRepositorio())
+            {
+                ViewBag.CodigosIso = ServicoConverteCodigosIso.ParaSelectListItens(codIsoRepo.Listar().ToList());
+            }
+            List<Container> containers = new List<Container>();
+
+            using (ContainerRepositorio contrRepo = new ContainerRepositorio())
+            {
+                containers = contrRepo.Listar().ToList();
+            }
+            return View(containers);
+        }
+        
+        [HttpPost]
+        public ActionResult ManutenirContainer(Container ParametrosPesquisa)
+        {
+            using (CodigoIsoRepositorio codIsoRepo = new CodigoIsoRepositorio())
+            {
+                ViewBag.CodigosIso = ServicoConverteCodigosIso.ParaSelectListItens(codIsoRepo.Listar().ToList());
+            }
+
+            return View(ServicoEncontraContainers.ComFiltro(ParametrosPesquisa));
         }
 
         public ActionResult EditarContainer()
@@ -27,5 +52,6 @@ namespace ContainerControl.Presentation.MVC.Controllers
         {
             return PartialView();
         }
+
     }
 }
