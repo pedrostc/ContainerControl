@@ -17,5 +17,10 @@ namespace ContainerControl.Presentation.MVC.Controllers
         {
             return View();
         }
+
+        public ActionResult EditarContainer()
+        {
+            return PartialView();
+        }
     }
 }
