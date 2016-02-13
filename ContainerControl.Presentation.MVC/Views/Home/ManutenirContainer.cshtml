@@ -1,4 +1,5 @@
-﻿@using System.Web.Mvc
+﻿@using System.Collections.Specialized
+@using System.Web.Mvc
 @using ContainerControl.Domain.Model
 @model List<Container>
 
@@ -88,7 +89,7 @@
                     <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir C&oacute;digo ISO</a>
                 </li>
                 <li>
-                    <a class="primary"><i class="glyphicon glyphicon-edit"></i> Alterar C&oacute;digo ISO</a>
+                    <a class="primary" onclick="EditarContainer()"><i class="glyphicon glyphicon-edit"></i> Alterar C&oacute;digo ISO</a>
                 </li>
             </ul>
 
@@ -99,13 +100,13 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#" class="success" data-toggle="modal" data-target="#mdlEditarContainer"><i class="glyphicon glyphicon-plus-sign"></i> Incluir Container</a>
+                    <a id="btnCriaContainer" href="#" class="success" data-toggle="modal" data-target="#mdlEditarContainer"><i class="glyphicon glyphicon-plus-sign"></i> Incluir Container</a>
                 </li>
                 <li>
-                    <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir Container</a>
+                    <a id="btnExcluiContainer" href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir Container</a>
                 </li>
                 <li>
-                    <a class="primary"><i class="glyphicon glyphicon-edit"></i> Alterar Container</a>
+                    <a id="btnEditaContainer" href="#" class="primary"><i class="glyphicon glyphicon-edit"></i> Alterar Container</a>
                 </li>
             </ul>
 
@@ -117,6 +118,9 @@
         <table ID="gridContainer" class="table table-responsive table-condensed table-hover table-striped">
             <thead>
             <tr>
+                <th>
+                    #
+                </th>
                 <th>
                     ID
                 </th>
@@ -145,6 +149,11 @@
             {
                 <tr>
                     <td>
+                        <div class="radio">
+                            @Html.RadioButton("SelectedRow", cntr.Id)
+                        </div>
+                    </td>
+                    <td>
                         @cntr.Id
                     </td>
                     <td>
@@ -171,44 +180,108 @@
         </table>
     </div>
 </div>
+
 <div ID="mdlEditarContainer" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Editar Container</h4>
             </div>
-            <div class="modal-body">
+            <div ID="mdlEditarContainerBody" class="modal-body">
                 @Html.Partial("EditarContainer", new Container())
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success">Salvar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
             </div>
         </div>
     </div>
 </div>
-<div ID="mdlEditarCodigoIso" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Editar Container</h4>
-            </div>
-            <div class="modal-body">
-                @Html.Partial("EditarCodigoIso", new CodigoIso())
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success">Salvar</button>
+@using (Html.BeginForm("SalvarCodigoIso", "Home", FormMethod.Post))
+{
+    <div ID="mdlEditarCodigoIso" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Container</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Partial("EditarCodigoIso", new CodigoIso())
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+
 
 @section scripts
 {
     <script type="text/javascript">
-        $(document).on("ready", function(s, e) {
-            //$("#gridContainer").bootgrid();
+        var ExcluirContainer = function(containerId) {
+            $.ajax({
+                    url: "./ExcluirContainer",
+                    data: { "containerId": containerId },
+                    method: "POST"
+                })
+                .done(function (data) {
+                    location.reload();
+                });
+        };
+
+        $("#btnEditaContainer").click(function(event) {
+            event.preventDefault();
+
+            var containerId = CapturaContainerSelecionado();
+
+            if (!containerId) {
+                alert("É necessário selecionar uma linha para realizar esta ação.");
+                return;
+            }
+
+            CapturaEdtContainer({ "containerId": containerId });
         });
+
+        $("#btnCriaContainer").click(function (event) {
+            event.preventDefault();
+            CapturaEdtContainer();
+        });
+
+        $("#btnExcluiContainer").click(function (event) {
+            event.preventDefault();
+            var containerId = CapturaContainerSelecionado();
+
+            if (!containerId) {
+                alert("É necessário selecionar uma linha para realizar esta ação.");
+                return;
+            }
+
+            if (confirm("Deseja realmente excluir a linha selecionada?"))
+                ExcluirContainer(containerId);
+        });
+
+        var CapturaEdtContainer = function (reqData) {
+            $.ajax({
+                    url: "./EditarContainer",
+                    data: reqData,
+                    method: "POST"
+                })
+                .done(function(data) {
+                    InicializaModalEdtContainer(data);
+                });
+        }
+
+        var InicializaModalEdtContainer = function(innerContent) {
+            $("#mdlEditarContainerBody").html(innerContent);
+            $("#mdlEditarContainer").modal();
+        }
+
+        var CapturaContainerSelecionado = function() {
+            return $("input[name=SelectedRow]:checked").val();
+        }
+
     </script>
 }

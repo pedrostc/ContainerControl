@@ -54,7 +54,7 @@ namespace ContainerControl.Application.Repository
                 entity = dao.Containers.Add(model);
 
                 dao.Entry(entity).State = EntityState.Added;
-                dao.Entry(model.CodigoIso).State = EntityState.Unchanged;
+                if(model.CodigoIso != null) dao.Entry(model.CodigoIso).State = EntityState.Unchanged;
 
                 dao.SaveChanges();
             }
@@ -66,10 +66,11 @@ namespace ContainerControl.Application.Repository
             Container entity = null;
             using (ContainerControlContext dao = new ContainerControlContext())
             {
-                entity = dao.Containers.Add(model);
+                entity = dao.Containers.FirstOrDefault(c => c.Id == model.Id);
+                entity.Populate(model);
 
                 dao.Entry(entity).State = EntityState.Modified;
-                dao.Entry(model.CodigoIso).State = EntityState.Unchanged;
+                if (model.CodigoIso != null)  dao.Entry(model.CodigoIso).State = EntityState.Unchanged;
 
                 dao.SaveChanges();
             }

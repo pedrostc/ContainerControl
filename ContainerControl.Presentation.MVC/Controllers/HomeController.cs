@@ -43,14 +43,49 @@ namespace ContainerControl.Presentation.MVC.Controllers
             return View(ServicoEncontraContainers.ComFiltro(ParametrosPesquisa));
         }
 
-        public ActionResult EditarContainer()
+        [HttpPost]
+        public ActionResult EditarContainer(Guid containerId)
         {
-            return PartialView();
+            Container container = new Container();
+            using (ContainerRepositorio repo = new ContainerRepositorio())
+            {
+                container = repo.CapturarPorId(containerId);
+            }
+
+            using (CodigoIsoRepositorio repo = new CodigoIsoRepositorio())
+            {
+                ViewBag.CodigosIso = ServicoConverteCodigosIso.ParaSelectListItens(repo.Listar().ToList());
+            }
+
+            return PartialView(container);
         }
 
-        public ActionResult EditarCodigoIso()
+        [HttpPost]
+        public ActionResult SalvarContainer(Container Model)
         {
-            return PartialView();
+            using (ContainerRepositorio repo = new ContainerRepositorio())
+            {
+                repo.InserirOuAtualizar(Model);
+            }
+
+            return RedirectToAction("ManutenirContainer");
+        }
+
+        [HttpPost]
+        public ActionResult ExcluirContainer(Guid containerId)
+        {
+            using (ContainerRepositorio repo = new ContainerRepositorio())
+            {
+                repo.Excluir(containerId);
+            }
+
+            return RedirectToAction("ManutenirContainer");
+        }
+
+        [HttpPost]
+        public ActionResult SalvarCodigoIso(CodigoIso Model)
+        {
+            return ManutenirContainer();
         }
 
     }
