@@ -16,20 +16,33 @@ namespace ContainerControl.DAL.Mapping
         public CodigoIsoMap()
         {
             HasKey(c => c.Id);
-            Property(c => c.Codigo).HasMaxLength(11).IsRequired().HasColumnAnnotation(IndexAnnotation.AnnotationName,
-                new IndexAnnotation(
-                    new IndexAttribute("IX_CodigoIsoCodigo", 1) { IsUnique = true }
-                    )
-                );
-            Property(c => c.Nome).HasMaxLength(50).IsRequired().HasColumnAnnotation(IndexAnnotation.AnnotationName,
-                new IndexAnnotation(
-                    new IndexAttribute("IX_CodigoIsoNome", 1) { IsUnique = true }
-                    )
-                );
+            Property(c => c.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                .IsRequired();
+
+            Property(c => c.Codigo)
+                .HasMaxLength(11)
+                .IsRequired()
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(
+                        new IndexAttribute("IX_CodigoIsoCodigo", 1) { IsUnique = true }
+                        )
+                    );
+
+            Property(c => c.Nome)
+                .HasMaxLength(50)
+                .IsRequired()
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(
+                        new IndexAttribute("IX_CodigoIsoNome", 1) { IsUnique = true }
+                        )
+                    );
+
+            Property(c => c.CriadoEm)
+                .IsRequired();
 
             Property(c => c.ModificadoEm)
-                .IsRequired()
-                .IsConcurrencyToken(true);
+                .IsRequired();
         }
     }
 }

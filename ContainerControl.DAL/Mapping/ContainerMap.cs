@@ -17,6 +17,10 @@ namespace ContainerControl.DAL.Mapping
         {
             ToTable("Containers");
             HasKey(c => c.Id);
+            Property(c => c.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                .IsRequired();
+
             Property(c => c.NroContainer)
                 .HasMaxLength(11)
                 .IsRequired()
@@ -25,12 +29,16 @@ namespace ContainerControl.DAL.Mapping
                     new IndexAttribute("IX_NroContainer", 1) { IsUnique = true }
                     )
                 );
+
             HasRequired(c => c.CodigoIso)
-                .WithMany();
+                .WithMany()
+                .HasForeignKey(c => c.CodigoIsoId);
+
+            Property(c => c.CriadoEm)   
+                .IsRequired();
 
             Property(c => c.ModificadoEm)
-                .IsRequired()
-                .IsConcurrencyToken(true);
+                .IsRequired();
         }
     }
 }

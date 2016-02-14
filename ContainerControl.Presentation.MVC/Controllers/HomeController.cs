@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using ContainerControl.Application.Repository;
+using ContainerControl.Application.Services;
+using ContainerControl.Domain.Model;
 
 namespace ContainerControl.Presentation.MVC.Controllers
 {
@@ -13,18 +17,76 @@ namespace ContainerControl.Presentation.MVC.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult ManutenirContainer()
         {
-            ViewBag.Message = "Your application description page.";
+            using (CodigoIsoRepositorio codIsoRepo = new CodigoIsoRepositorio())
+            {
+                ViewBag.CodigosIso = ServicoConverteCodigosIso.ParaSelectListItens(codIsoRepo.Listar().ToList());
+            }
+            List<Container> containers = new List<Container>();
 
-            return View();
+            using (ContainerRepositorio contrRepo = new ContainerRepositorio())
+            {
+                containers = contrRepo.Listar().ToList();
+            }
+            return View(containers);
+        }
+        
+        [HttpPost]
+        public ActionResult ManutenirContainer(Container ParametrosPesquisa)
+        {
+            using (CodigoIsoRepositorio codIsoRepo = new CodigoIsoRepositorio())
+            {
+                ViewBag.CodigosIso = ServicoConverteCodigosIso.ParaSelectListItens(codIsoRepo.Listar().ToList());
+            }
+
+            return View(ServicoEncontraContainers.ComFiltro(ParametrosPesquisa));
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult EditarContainer(Guid containerId)
         {
-            ViewBag.Message = "Your contact page.";
+            Container container = new Container();
+            using (ContainerRepositorio repo = new ContainerRepositorio())
+            {
+                container = repo.CapturarPorId(containerId);
+            }
 
-            return View();
+            using (CodigoIsoRepositorio repo = new CodigoIsoRepositorio())
+            {
+                ViewBag.CodigosIso = ServicoConverteCodigosIso.ParaSelectListItens(repo.Listar().ToList());
+            }
+
+            return PartialView(container);
         }
+
+        [HttpPost]
+        public ActionResult SalvarContainer(Container Model)
+        {
+            using (ContainerRepositorio repo = new ContainerRepositorio())
+            {
+                repo.InserirOuAtualizar(Model);
+            }
+
+            return RedirectToAction("ManutenirContainer");
+        }
+
+        [HttpPost]
+        public ActionResult ExcluirContainer(Guid containerId)
+        {
+            using (ContainerRepositorio repo = new ContainerRepositorio())
+            {
+                repo.Excluir(containerId);
+            }
+
+            return RedirectToAction("ManutenirContainer");
+        }
+
+        [HttpPost]
+        public ActionResult SalvarCodigoIso(CodigoIso Model)
+        {
+            return ManutenirContainer();
+        }
+
     }
 }

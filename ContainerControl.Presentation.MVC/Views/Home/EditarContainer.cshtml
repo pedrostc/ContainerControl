@@ -1,0 +1,57 @@
+﻿@using System.Globalization
+@using ContainerControl.Domain.Model
+@model Container
+
+@{
+    List<SelectListItem> codigosIso = new List<SelectListItem>() {
+            new SelectListItem()
+            {
+                Disabled = false,
+                Text = "--Selecione--",
+                Value = "-1"
+            }
+        };
+    codigosIso.AddRange(ViewBag.CodigosIso);
+}
+
+@using (Html.BeginForm("SalvarContainer", "Home", FormMethod.Post))
+{
+    <div class="container-fluid form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.Id)
+                @Html.TextBoxFor(m => m.Id, new {@class = "form-control"})
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.NroContainer)
+                @Html.TextBoxFor(m => m.NroContainer, new {@class = "form-control"})
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.CodigoIso)
+                @Html.DropDownListFor(m => m.CodigoIsoId, codigosIso, new {@class = "form-control"})
+
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Fabricacao)
+                @Html.TextBoxFor(m => m.Fabricacao, "{0:yyyy-MM-dd}", new {@class = "form-control", @type = "date"})
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Tara)
+                @Html.TextBoxFor(m => m.Tara, "{0:0.###}" , new {@class = "form-control", @step= "any", @min = "0" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.CM)
+                @Html.TextBoxFor(m => m.CM, "{0:0.###}", new {@class = "form-control", @step = "0.001", @min = "0" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Peso)
+                @Html.TextBoxFor(m => m.Peso, "{0:0.###}", new {@class = "form-control", @step = "0.001", @min = "0" })
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success pull-right">Salvar</button>
+}

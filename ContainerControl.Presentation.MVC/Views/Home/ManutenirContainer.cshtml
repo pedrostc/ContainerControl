@@ -1,0 +1,321 @@
+﻿@using System.Collections.Specialized
+@using System.Web.Mvc
+@using ContainerControl.Domain.Model
+@model List<Container>
+
+@{
+    Container ParametrosPesquisa = new Container();
+    List<SelectListItem> codigosIso = new List<SelectListItem>() {
+            new SelectListItem()
+            {
+                Disabled = false,
+                Text = "--Selecione--",
+                Value = "-1"
+            }
+        };
+    codigosIso.AddRange(ViewBag.CodigosIso);
+
+    ViewBag.Title = "Manutenir Containers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
+
+@using (Html.BeginForm("ManutenirContainer", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => ParametrosPesquisa.Id)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Id, new { @class="form-control", @disabled="disabled" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.NroContainer)
+                @Html.TextBoxFor(m => ParametrosPesquisa.NroContainer, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.CodigoIso)
+                @Html.DropDownListFor(m => ParametrosPesquisa.CodigoIsoId, codigosIso, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.Fabricacao)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Fabricacao, new { @class = "form-control", @type="date" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.Tara)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Tara, new { @class = "form-control", @type = "number" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.CM)
+                @Html.TextBoxFor(m => ParametrosPesquisa.CM, new { @class = "form-control", @type = "number" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => ParametrosPesquisa.Peso)
+                @Html.TextBoxFor(m => ParametrosPesquisa.Peso, new { @class = "form-control", @type = "number" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-8 col-md-4">
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
+                <a class="btn btn-danger" href="@Url.Action("ManutenirContainer", "Home")"><i class="glyphicon glyphicon-remove-circle"></i> Limpar</a>
+                <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-question-sign"></i> Ajudar</button>
+            </div>
+        </div>
+    </div>
+}
+
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group pull-right" role="group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Opera&ccedil;&otilde;es de C&oacute;digos ISO <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#" class="success" id="btnCriaCodigoIso"><i class="glyphicon glyphicon-plus-sign"></i> Incluir C&oacute;digo ISO</a>
+                </li>
+                <li>
+                    <a href="#" class="danger" id="btnExcluiCodigoIso"><i class="glyphicon glyphicon-trash"></i> Excluir C&oacute;digo ISO</a>
+                </li>
+                <li>
+                    <a class="primary" id="btnEditaCodigoIso"><i class="glyphicon glyphicon-edit"></i> Alterar C&oacute;digo ISO</a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="btn-group pull-right" role="group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Opera&ccedil;&otilde;es de Container <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a id="btnCriaContainer" href="#" class="success" data-toggle="modal" data-target="#mdlEditarContainer"><i class="glyphicon glyphicon-plus-sign"></i> Incluir Container</a>
+                </li>
+                <li>
+                    <a id="btnExcluiContainer" href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir Container</a>
+                </li>
+                <li>
+                    <a id="btnEditaContainer" href="#" class="primary"><i class="glyphicon glyphicon-edit"></i> Alterar Container</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table ID="gridContainer" class="table table-responsive table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    ID
+                </th>
+                <th>
+                    NroContainer
+                </th>
+                <th>
+                    Tara
+                </th>
+                <th>
+                    CM
+                </th>
+                <th>
+                    Peso
+                </th>
+                <th>
+                    Codigo ISO
+                </th>
+                <th>
+                    Data de Fabrica&ccedil;&atilde;o
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (Container cntr in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="radio">
+                            @Html.RadioButton("SelectedRow", cntr.Id)
+                        </div>
+                    </td>
+                    <td>
+                        @cntr.Id
+                    </td>
+                    <td>
+                        @cntr.NroContainer
+                    </td>
+                    <td>
+                        @cntr.Tara
+                    </td>
+                    <td>
+                        @cntr.CM
+                    </td>
+                    <td>
+                        @cntr.Peso
+                    </td>
+                    <td>
+                        @cntr.CodigoIso.Codigo
+                    </td>
+                    <td>
+                        @cntr.Fabricacao
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div ID="mdlEditarContainer" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Container</h4>
+            </div>
+            <div ID="mdlEditarContainerBody" class="modal-body">
+                @Html.Partial("EditarContainer", new Container())
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ID="mdlEditarCodigoIso" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Container</h4>
+            </div>
+            <div id="mdlEditarCodigoIsoContainer" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        var ExcluirContainer = function(containerId) {
+            $.ajax({
+                    url: "./ExcluirContainer",
+                    data: { "containerId": containerId },
+                    method: "POST"
+                })
+                .done(function (data) {
+                    location.reload();
+                });
+        };
+
+        $("#btnEditaContainer").click(function(event) {
+            event.preventDefault();
+
+            var containerId = CapturaContainerSelecionado();
+
+            if (!containerId) {
+                alert("É necessário selecionar uma linha para realizar esta ação.");
+                return;
+            }
+
+            CapturaEdtContainer({ "containerId": containerId });
+        });
+
+        $("#btnCriaContainer").click(function (event) {
+            event.preventDefault();
+            CapturaEdtContainer();
+        });
+
+        $("#btnExcluiContainer").click(function (event) {
+            event.preventDefault();
+            var containerId = CapturaContainerSelecionado();
+
+            if (!containerId) {
+                alert("É necessário selecionar uma linha para realizar esta ação.");
+                return;
+            }
+
+            if (confirm("Deseja realmente excluir a linha selecionada?"))
+                ExcluirContainer(containerId);
+        });
+
+        var CapturaEdtContainer = function (reqData) {
+            $.ajax({
+                    url: "./EditarContainer",
+                    data: reqData,
+                    method: "POST"
+                })
+                .done(function(data) {
+                    InicializaModalEdtContainer(data);
+                });
+        }
+
+        var InicializaModalEdtContainer = function(innerContent) {
+            $("#mdlEditarContainerBody").html(innerContent);
+            $("#mdlEditarContainer").modal();
+        }
+
+        var CapturaContainerSelecionado = function() {
+            return $("input[name=SelectedRow]:checked").val();
+        }
+
+        $("#btnEditaCodigoIso").click(function(event) {
+            event.preventDefault();
+
+            CapturaEdtCodigoIso(true);
+        });
+
+        $("#btnCriaCodigoIso").click(function (event) {
+            event.preventDefault();
+
+            CapturaEdtCodigoIso(false);
+        });
+
+        $("#btnExcluiCodigoIso").click(function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "../CodigoIso/ExcluiCodigo",
+                method: "GET",
+            })
+            .done(function (data) {
+                $("#mdlEditarCodigoIsoContainer").html(data);
+                $("#mdlEditarCodigoIso").modal();
+            });
+        });
+
+        var CapturaEdtCodigoIso = function(edicao) {
+            $.ajax({
+                url: "../CodigoIso/CodigoIsoSelectList",
+                method: "GET",
+                data: {
+                    "edicao": edicao
+                }
+            })
+           .done(function (data) {
+               $("#mdlEditarCodigoIsoContainer").html(data);
+               $("#mdlEditarCodigoIso").modal();
+           });
+        }
+
+    </script>
+}

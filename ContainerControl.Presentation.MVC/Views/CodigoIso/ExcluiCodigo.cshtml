@@ -1,0 +1,68 @@
+﻿@using (Html.BeginForm("SalvaCodigo", "CodigoIso", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <label for="ddlCodigosIso">Código:</label>
+            <select Id="ddlCodigosIso" class="form-control">
+                <option value="-1">--Selecione--</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" id="btnExcluirCodigoIso" class="btn btn-success pull-right">Excluir</button>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $.getJSON("../CodigoIso/ListarCodigos")
+        .done(function(data) {
+            data.forEach(function(e, i) {
+                $("#ddlCodigosIso").append("<option name='" + e.Codigo + "' value='" + e.Id + "'>" + e.Nome + "</option>");
+            });
+        })
+        .fail(function(err) {
+            console.log(err);
+        });
+
+
+    $("#ddlCodigosIso").change(function() {
+        var data = {
+            "id": $(this).val()
+        };
+
+        $.getJSON("../CodigoIso/CapturaCodigo", data)
+            .done(function(data) {
+                $("#hdnIdCodigoIso").val(data.Id);
+                $("#txtNomeCodigoIso").val(data.Nome);
+                $("#txtCodigoCodigoIso").val(data.Codigo);
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+    });
+
+    $("#btnExcluirCodigoIso").click(function() {
+        var data = {
+            "id": $("#ddlCodigosIso").val()
+        };
+
+        ExcluirCodigo(data);
+    });
+
+    var ExcluirCodigo = function (data) {
+
+        $.post("../CodigoIso/ExcluiCodigo", data)
+            .done(function(res) {
+                console.log(res);
+                location.reload();
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+
+    };
+
+</script>
