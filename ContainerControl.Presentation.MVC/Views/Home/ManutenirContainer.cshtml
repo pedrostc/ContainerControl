@@ -86,7 +86,7 @@
                     <a href="#" class="success" id="btnCriaCodigoIso"><i class="glyphicon glyphicon-plus-sign"></i> Incluir C&oacute;digo ISO</a>
                 </li>
                 <li>
-                    <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir C&oacute;digo ISO</a>
+                    <a href="#" class="danger" id="btnExcluiCodigoIso"><i class="glyphicon glyphicon-trash"></i> Excluir C&oacute;digo ISO</a>
                 </li>
                 <li>
                     <a class="primary" id="btnEditaCodigoIso"><i class="glyphicon glyphicon-edit"></i> Alterar C&oacute;digo ISO</a>
@@ -288,6 +288,19 @@
             event.preventDefault();
 
             CapturaEdtCodigoIso(false);
+        });
+
+        $("#btnExcluiCodigoIso").click(function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "../CodigoIso/ExcluiCodigo",
+                method: "GET",
+            })
+            .done(function (data) {
+                $("#mdlEditarCodigoIsoContainer").html(data);
+                $("#mdlEditarCodigoIso").modal();
+            });
         });
 
         var CapturaEdtCodigoIso = function(edicao) {

@@ -1,6 +1,4 @@
-﻿@model bool
-
-@using (Html.BeginForm("SalvaCodigo", "CodigoIso", FormMethod.Post))
+﻿@using (Html.BeginForm("SalvaCodigo", "CodigoIso", FormMethod.Post))
 {
     <div class="row">
         <div class="col-md-12">
@@ -12,29 +10,13 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <label for="txtNomeCodigoIso">Nome:</label>
-            <input type="text" id="txtNomeCodigoIso" class="form-control"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <label for="txtCodigoCodigoIso">C&oacute;digo:</label>
-            <input type="text" id="txtCodigoCodigoIso" class="form-control"/>
-            <input type="hidden" id="hdnIdCodigoIso" value="@Guid.Empty"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <button type="button" id="btnSalvarCodigoIso" class="btn btn-success pull-right">Salvar</button>
+            <button type="button" id="btnExcluirCodigoIso" class="btn btn-success pull-right">Excluir</button>
         </div>
     </div>
 }
 
 <script type="text/javascript">
 
-    var enableSelect = @Json.Encode(Model);
-
-    if(enableSelect)
     $.getJSON("../CodigoIso/ListarCodigos")
         .done(function(data) {
             data.forEach(function(e, i) {
@@ -45,8 +27,7 @@
             console.log(err);
         });
 
-    $("#ddlCodigosIso").prop('disabled', !enableSelect);
-    
+
     $("#ddlCodigosIso").change(function() {
         var data = {
             "id": $(this).val()
@@ -63,19 +44,17 @@
             });
     });
 
-    $("#btnSalvarCodigoIso").click(function() {
+    $("#btnExcluirCodigoIso").click(function() {
         var data = {
-            Id: $("#hdnIdCodigoIso").val(),
-            Nome: $("#txtNomeCodigoIso").val(),
-            Codigo: $("#txtCodigoCodigoIso").val()
+            "id": $("#ddlCodigosIso").val()
         };
 
-        SalvarCodigo(data);
+        ExcluirCodigo(data);
     });
 
-    var SalvarCodigo = function(data) {
+    var ExcluirCodigo = function (data) {
 
-        $.post("../CodigoIso/SalvaCodigo", data)
+        $.post("../CodigoIso/ExcluiCodigo", data)
             .done(function(res) {
                 console.log(res);
                 location.reload();

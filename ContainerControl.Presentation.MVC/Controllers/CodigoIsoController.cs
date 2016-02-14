@@ -53,5 +53,22 @@ namespace ContainerControl.Presentation.MVC.Controllers
             }
             return Json(cod);
         }
+
+        public ActionResult ExcluiCodigo()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public JsonResult ExcluiCodigo(Guid id)
+        {
+            CodigoIso cod = new CodigoIso();
+            using (CodigoIsoRepositorio codIsoRepo = new CodigoIsoRepositorio())
+            {
+                cod = codIsoRepo.Excluir(id);
+            }
+
+            return Json(cod);
+        }
     }
 }
