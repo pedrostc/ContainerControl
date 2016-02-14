@@ -8,6 +8,6 @@ using ContainerControl.DAL.Context;
 
 namespace ContainerControl.DAL.DbInitializer
 {
-    public class ContainerControlDbInitializer : DropCreateDatabaseAlways<ContainerControlContext>
+    public class ContainerControlDbInitializer : CreateDatabaseIfNotExists<ContainerControlContext>
     { }
 }
