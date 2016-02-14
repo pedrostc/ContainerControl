@@ -83,13 +83,13 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#" class="success" data-toggle="modal" data-target="#mdlEditarCodigoIso"><i class="glyphicon glyphicon-plus-sign"></i> Incluir C&oacute;digo ISO</a>
+                    <a href="#" class="success" id="btnCriaCodigoIso"><i class="glyphicon glyphicon-plus-sign"></i> Incluir C&oacute;digo ISO</a>
                 </li>
                 <li>
                     <a href="#" class="danger"><i class="glyphicon glyphicon-trash"></i> Excluir C&oacute;digo ISO</a>
                 </li>
                 <li>
-                    <a class="primary" onclick="EditarContainer()"><i class="glyphicon glyphicon-edit"></i> Alterar C&oacute;digo ISO</a>
+                    <a class="primary" id="btnEditaCodigoIso"><i class="glyphicon glyphicon-edit"></i> Alterar C&oacute;digo ISO</a>
                 </li>
             </ul>
 
@@ -192,30 +192,25 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Salvar</button>
             </div>
         </div>
     </div>
 </div>
-@using (Html.BeginForm("SalvarCodigoIso", "Home", FormMethod.Post))
-{
-    <div ID="mdlEditarCodigoIso" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Editar Container</h4>
-                </div>
-                <div class="modal-body">
-                    @Html.Partial("EditarCodigoIso", new CodigoIso())
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Salvar</button>
-                </div>
+
+<div ID="mdlEditarCodigoIso" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Container</h4>
+            </div>
+            <div id="mdlEditarCodigoIsoContainer" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
-}
+</div>
 
 
 @section scripts
@@ -281,6 +276,32 @@
 
         var CapturaContainerSelecionado = function() {
             return $("input[name=SelectedRow]:checked").val();
+        }
+
+        $("#btnEditaCodigoIso").click(function(event) {
+            event.preventDefault();
+
+            CapturaEdtCodigoIso(true);
+        });
+
+        $("#btnCriaCodigoIso").click(function (event) {
+            event.preventDefault();
+
+            CapturaEdtCodigoIso(false);
+        });
+
+        var CapturaEdtCodigoIso = function(edicao) {
+            $.ajax({
+                url: "../CodigoIso/CodigoIsoSelectList",
+                method: "GET",
+                data: {
+                    "edicao": edicao
+                }
+            })
+           .done(function (data) {
+               $("#mdlEditarCodigoIsoContainer").html(data);
+               $("#mdlEditarCodigoIso").modal();
+           });
         }
 
     </script>
